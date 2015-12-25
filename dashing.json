@@ -1,0 +1,13 @@
+{
+    "name": "tensorflow",
+    "package": "tensorflow",
+    "index": "index.html",
+    "selectors": {
+        ".content h3": "Class",
+        ".content h4": "Function"
+    },
+    "ignore": [
+    ],
+    "allowJS": true,
+    "icon32x32": "icon.png"
+}
