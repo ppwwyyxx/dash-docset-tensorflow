@@ -39,11 +39,12 @@ if css:
     css = css[0]
     css['href'] = ''.join(['../'] * level) + 'main.css'
 
-jss = soup.findAll('script')
-for js in jss:
-    if 'MathJax' in js.get('src'):
-        js['src'] = '/'.join(['..'] * level) + js['src']
-        break
+# mathjax doesn't work currently
+# jss = soup.findAll('script')
+# for js in jss:
+    # if 'MathJax' in js.get('src'):
+        # js['src'] = '/'.join(['..'] * level) + js['src']
+        # break
 
 with open(fname, 'w') as f:
     print >> f, str(soup)
