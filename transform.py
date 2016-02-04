@@ -34,10 +34,10 @@ remove('div', attrs={'class': 'content-nav'})
 remove('a', attrs={'class': 'github-ribbon'})
 remove('header')
 
-css = soup.findAll('link', attrs={'href': '/main.css'})
-if css:
-    css = css[0]
-    css['href'] = ''.join(['../'] * level) + 'main.css'
+#css = soup.findAll('link', attrs={'href': '/main.css'})
+#if css:
+    #css = css[0]
+    #css['href'] = ''.join(['../'] * level) + 'main.css'
 
 # mathjax doesn't work currently
 # jss = soup.findAll('script')
