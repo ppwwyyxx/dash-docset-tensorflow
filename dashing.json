@@ -3,7 +3,7 @@
     "package": "tensorflow",
     "index": "index.html",
     "selectors": {
-        ".content h3": "Class",
+        ".content h3": "Function",
         ".content h4": "Function"
     },
     "ignore": [
