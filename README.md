@@ -7,7 +7,7 @@ You can download the latest release [here](https://github.com/ppwwyyxx/dash-docs
 # Steps to generate the docset
 + Install [dashing](https://github.com/technosophos/dashing#readme)
 + `cd THIS_REPO`
-+ `wget -r "https://www.tensorflow.org"`
++ `wget --exclude-domains=github.com -r "https://www.tensorflow.org"`
 + `./preprocess.sh www.tensorflow.org`
 + `cd www.tensorflow.org/`
 + `cp ../{dashing.json,icon.png,main.css} .`
