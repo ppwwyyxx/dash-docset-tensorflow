@@ -1,6 +1,6 @@
 {
-    "name": "tensorflow",
-    "package": "tensorflow",
+    "name": "TensorFlow",
+    "package": "TensorFlow",
     "index": "index.html",
     "selectors": {
         ".content h3": "Function",
@@ -9,5 +9,6 @@
     "ignore": [
     ],
     "allowJS": true,
-    "icon32x32": "icon.png"
+    "icon32x32": "icon@2x.png",
+    "icon16x16": "icon.png"
 }

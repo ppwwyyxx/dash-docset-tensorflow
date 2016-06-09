@@ -10,7 +10,7 @@ You can download the latest release [here](https://github.com/ppwwyyxx/dash-docs
 + `wget --exclude-domains=github.com -r "https://www.tensorflow.org/versions/master/api_docs/python/index.html"`
 + `./preprocess.sh www.tensorflow.org`
 + `cd www.tensorflow.org/`
-+ `cp ../{dashing.json,icon.png,main.css} .`
++ `yes | cp ../{dashing.json,icon*.png,main.css} .`
 + `dashing build` will give you a `tensorflow.docset` folder.
 
 Right now this json only roughly parses function names (which is enough for me to use).
