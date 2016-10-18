@@ -7,7 +7,7 @@ You can download the latest release [here](https://github.com/ppwwyyxx/dash-docs
 ## Steps to generate the docset
 + Install [dashing](https://github.com/technosophos/dashing#readme)
 + `cd THIS_REPO`
-+ `wget --exclude-domains=github.com -r "https://www.tensorflow.org/versions/master/api_docs/python/index.html"`
++ `wget --header 'Accept-Encoding: deflate' --exclude-domains=github.com -r "https://www.tensorflow.org/versions/master/api_docs/python/index.html"`
 + `./preprocess.sh www.tensorflow.org`
 + `cd www.tensorflow.org/`
 + `rm -rf api_docs versions/r0.9` to remove duplicated docs

@@ -7,10 +7,18 @@
 import sys
 import os
 import BeautifulSoup as bs4
+import magic
 
 fname = sys.argv[1]
 if not fname.endswith('.html'):
     sys.exit(0)
+
+if 'gzip compressed' in magic.from_file(fname):
+    import gzip
+    f = gzip.open(fname)
+else:
+    f = open(fname)
+html = f.read().decode('utf-8')
 
 def get_level():
     dirname = os.path.dirname(fname)
@@ -22,7 +30,6 @@ def get_level():
 
 print "Processing {} ...".format(fname)
 level = get_level()
-html = open(fname).read()
 soup = bs4.BeautifulSoup(html)
 
 def remove(*args, **kwargs):
