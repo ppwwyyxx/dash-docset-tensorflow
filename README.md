@@ -8,9 +8,9 @@ You can download the latest release [here](https://github.com/ppwwyyxx/dash-docs
 + Install [dashing](https://github.com/technosophos/dashing#readme)
 + `cd THIS_REPO`
 + `wget --header 'Accept-Encoding: deflate' --exclude-domains=github.com -r "https://www.tensorflow.org/versions/master/api_docs/python/index.html"`
++ `rm -rf www.tensorflow.org/{api_docs,versions/r0.9}` to remove duplicated docs
 + `./preprocess.sh www.tensorflow.org`
 + `cd www.tensorflow.org/`
-+ `rm -rf api_docs versions/r0.9` to remove duplicated docs
 + `yes | cp ../{dashing.json,icon*.png,main.css} .`
 + `dashing build` will give you a `tensorflow.docset` folder.
 
