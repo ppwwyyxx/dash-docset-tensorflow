@@ -37,14 +37,29 @@ def remove(*args, **kwargs):
     for r in rs:
         r.extract()
 
-remove('div', attrs={'class': 'content-nav'})
-remove('a', attrs={'class': 'github-ribbon'})
 remove('header')
+remove('footer')
+remove('div', attrs={'class': 'devsite-nav-responsive-sidebar-panel'})
+remove('div', attrs={'id': 'gc-wrapper'})
+#remove('nav', attrs={'class': 'devsite-section-nav devsite-nav nocontent'})
+remove('nav')
+remove('script')
 
-css = soup.findAll('link', attrs={'href': '/main.css'})
-if css:
-    css = css[0]
+# point to the new css
+allcss = soup.findAll('link', attrs={'rel': 'stylesheet'})
+if allcss:
+    css = allcss[0]
     css['href'] = ''.join(['../'] * level) + 'main.css'
+    for k in allcss[1:]:
+        k.extract()
+
+# filter buggy title
+h4s = soup.findAll('h4')
+if h4s:
+    for h4 in h4s:
+        if '{:#' in h4.text:
+            code = h4.findAll('code')[0]
+            h4.contents = [code]
 
 # mathjax doesn't work currently
 # jss = soup.findAll('script')
@@ -52,6 +67,5 @@ if css:
     # if 'MathJax' in js.get('src'):
         # js['src'] = '/'.join(['..'] * level) + js['src']
         # break
-
 with open(fname, 'w') as f:
     print >> f, str(soup)

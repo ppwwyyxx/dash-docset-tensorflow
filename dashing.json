@@ -3,8 +3,8 @@
     "package": "TensorFlow",
     "index": "index.html",
     "selectors": {
-        ".content h3": "Function",
-        ".content h4": "Function"
+        ".devsite-article-body h3": "Function",
+        ".devsite-article-body h4": "Function"
     },
     "ignore": [
     ],

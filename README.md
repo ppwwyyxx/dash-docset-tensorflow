@@ -7,12 +7,11 @@ You can download the latest release [here](https://github.com/ppwwyyxx/dash-docs
 ## Steps to generate the docset
 + Install [dashing](https://github.com/technosophos/dashing#readme)
 + `cd THIS_REPO`
-+ `wget --header 'Accept-Encoding: deflate' --exclude-domains=github.com -r "https://www.tensorflow.org/versions/master/api_docs/python/index.html"`
-+ `rm -rf www.tensorflow.org/{api_docs,versions/r0.9}` to remove duplicated docs
++ `wget --header 'Accept-Encoding: deflate' --domains=www.tensorflow.org -e robots=off --no-parent --adjust-extension -r 'https://www.tensorflow.org/versions/master/api_docs/'`
++ `cp dashing.json icon*.png main.css www.tensorflow.org`
 + `./preprocess.sh www.tensorflow.org`
 + `cd www.tensorflow.org/`
-+ `yes | cp ../{dashing.json,icon*.png,main.css} .`
-+ `dashing build` will give you a `tensorflow.docset` folder.
++ `dashing build` will give you a `TensorFlow.docset` folder.
 
 Right now this `dashing.json` only roughly parses function names (which is enough for me to use).
 Feel free to add more features and contribute!
