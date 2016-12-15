@@ -1,6 +1,5 @@
 # dash-docset-tensorflow
-This is a [dashing](https://github.com/technosophos/dashing#readme)
-configuration file with some scripts to help generate dash/zeal docset for [tensorflow](https://www.tensorflow.org/).
+Build [dash](https://kapeli.com/dash)/[zeal](https://github.com/zealdocs/zeal) docset for [TensorFlow](https://www.tensorflow.org/).
 
 You can download the latest release [here](https://github.com/ppwwyyxx/dash-docset-tensorflow/releases).
 
