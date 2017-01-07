@@ -5,6 +5,7 @@ You can download the latest release [here](https://github.com/ppwwyyxx/dash-docs
 
 ## Steps to generate the docset
 + Install [dashing](https://github.com/technosophos/dashing#readme)
++ Install [python-magic](https://github.com/ahupp/python-magic): `pip install --user python-magic`
 + `cd THIS_REPO`
 + `wget --header 'Accept-Encoding: deflate' --domains=www.tensorflow.org -e robots=off --no-parent --adjust-extension -r 'https://www.tensorflow.org/versions/master/api_docs/'`
 + `cp dashing.json icon*.png main.css www.tensorflow.org`
