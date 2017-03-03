@@ -2,6 +2,7 @@
     "name": "TensorFlow",
     "package": "TensorFlow",
     "index": "index.html",
+    "externalURL": "https://www.tensorflow.org/",
     "selectors": {
         ".devsite-article-body h3": "Function",
         ".devsite-article-body h4": "Function"
