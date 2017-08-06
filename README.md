@@ -1,7 +1,11 @@
 # dash-docset-tensorflow
 Build [dash](https://kapeli.com/dash)/[zeal](https://github.com/zealdocs/zeal) docset for [TensorFlow](https://www.tensorflow.org/).
 
-You can download the latest release [here](https://github.com/ppwwyyxx/dash-docset-tensorflow/releases). Or add this feed `dash-feed://https%3A//raw.githubusercontent.com/ppwwyyxx/dash-docset-tensorflow/master/TensorFlow.xml` directly in Dash/Zeal.
+To use, you can add this feed in Dash/Zeal:
+```
+https://raw.githubusercontent.com/ppwwyyxx/dash-docset-tensorflow/master/TensorFlow.xml
+```
+Or download the latest release [here](https://github.com/ppwwyyxx/dash-docset-tensorflow/releases).
 
 ## Steps to generate the docset
 + Install [dashing](https://github.com/technosophos/dashing): `go get -u github.com/technosophos/dashing`
