@@ -11,7 +11,8 @@ which parallel > /dev/null 2>&1 && {
 }
 
 set +e
-rm -rf "$1"/versions/master/api_docs/python/tf/contrib/keras
+rm -rf "$1"/versions/master/api_docs/python/tf/contrib/keras*
+rm -rf "$1"/versions/master/api_docs/java
 set -e
 
 find "$1" -type f -name "*.mp4" -delete
