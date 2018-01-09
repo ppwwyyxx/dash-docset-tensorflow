@@ -11,7 +11,7 @@ Or download the latest release [here](https://github.com/ppwwyyxx/dash-docset-te
 + Install [dashing](https://github.com/technosophos/dashing): `go get -u github.com/technosophos/dashing`
 + `pip install --user python-magic beautifulsoup`
 + `cd THIS_REPO`
-+ `wget -nc -np -N --compression=gzip --domains=www.tensorflow.org -e robots=off --adjust-extension -r 'https://www.tensorflow.org/versions/master/api_docs/'`
++ `wget -nc -np --compression=gzip --domains=www.tensorflow.org -e robots=off --adjust-extension -r 'https://www.tensorflow.org/versions/master/api_docs/'`
 + `cp dashing.json icon*.png main.css www.tensorflow.org`
 + `./preprocess.sh www.tensorflow.org`
 + `cd www.tensorflow.org/`
