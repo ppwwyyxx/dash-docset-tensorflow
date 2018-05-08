@@ -1,10 +1,12 @@
 {
-    "name": "TensorFlow",
+    "name": "TensorFlow 1.8.0",
     "package": "TensorFlow",
     "index": "index.html",
     "externalURL": "https://www.tensorflow.org/",
     "selectors": {
-        "h1.devsite-page-title": "Function"
+        "h1.devsite-page-title#Module": "Module",
+        "h1.devsite-page-title#Function": "Function",
+        "h1.devsite-page-title#Class": "Class"
     },
     "ignore": [
     ],
