@@ -5,8 +5,8 @@
 [[ -z "$1" ]] && exit 1
 
 set +e
-rm -rf "$1"/versions/master/api_docs/python/tf/contrib/keras*
-rm -rf "$1"/versions/master/api_docs/python/tf/keras
+# rm -rf "$1"/versions/master/api_docs/python/tf/contrib/keras*
+# rm -rf "$1"/versions/master/api_docs/python/tf/keras
 rm -rf "$1"/versions/master/api_docs/java
 set -e
 
