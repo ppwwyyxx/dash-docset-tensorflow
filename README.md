@@ -15,7 +15,6 @@ Or download the latest release [here](https://github.com/ppwwyyxx/dash-docset-te
 + `cp dashing.json icon*.png main.css www.tensorflow.org`
 + `./preprocess.sh www.tensorflow.org`
 + `cd www.tensorflow.org/`
-+ (optional) `find | sort -f | uniq -di | xargs rm -r` to list and remove case-insensitive duplicated files, to avoid problems on case-insensitive filesystems
 + `dashing build` will give you a `TensorFlow.docset` folder.
 
 Right now this `dashing.json` only roughly parses function names (which is enough for me to use).

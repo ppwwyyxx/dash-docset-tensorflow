@@ -1,12 +1,13 @@
-#!/usr/bin/env python2
-# -*- coding: UTF-8 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # File: transform.py
-# Author: Yuxin Wu <ppwwyyxx@gmail.com>
+# Author: Yuxin Wu
 
 
+from __future__ import print_function
 import sys
 import os
-import BeautifulSoup as bs4
+import bs4
 import magic
 
 fname = sys.argv[1]
@@ -17,8 +18,9 @@ if 'gzip compressed' in magic.from_file(fname):
     import gzip
     f = gzip.open(fname)
 else:
-    f = open(fname)
+    f = open(fname, 'rb')
 html = f.read().decode('utf-8')
+
 
 def get_level():
     dirname = os.path.dirname(fname)
@@ -28,20 +30,24 @@ def get_level():
         cnt += 1
     return cnt
 
-print "Processing {} ...".format(fname)
+
+print("Processing {} ...".format(fname))
 level = get_level()
-soup = bs4.BeautifulSoup(html)
+soup = bs4.BeautifulSoup(html, 'lxml')
+
 
 def remove(*args, **kwargs):
     rs = soup.findAll(*args, **kwargs)
     for r in rs:
         r.extract()
 
+
 remove('header')
 remove('footer')
 remove('div', attrs={'class': 'devsite-nav-responsive-sidebar-panel'})
+remove('div', attrs={'class': 'devsite-content-footer nocontent'})
 remove('div', attrs={'id': 'gc-wrapper'})
-#remove('nav', attrs={'class': 'devsite-section-nav devsite-nav nocontent'})
+# remove('nav', attrs={'class': 'devsite-section-nav devsite-nav nocontent'})
 remove('nav')
 remove('script')
 
@@ -53,14 +59,6 @@ if allcss:
     for k in allcss[1:]:
         k.extract()
 
-# filter buggy title
-h4s = soup.findAll('h4')
-if h4s:
-    for h4 in h4s:
-        if '{:#' in h4.text:
-            code = h4.findAll('code')[0]
-            h4.contents = [code]
-
 # mathjax doesn't work currently
 # jss = soup.findAll('script')
 # for js in jss:
@@ -68,4 +66,4 @@ if h4s:
         # js['src'] = '/'.join(['..'] * level) + js['src']
         # break
 with open(fname, 'w') as f:
-    print >> f, str(soup)
+    f.write(str(soup))

@@ -1572,11 +1572,13 @@ h1,
 .devsite-landing-row h2,
 .devsite-landing-row-large-headings .devsite-landing-row-item-description>a>h3,
 .devsite-landing-row-large-headings .devsite-landing-row-item-description>h3,
+/* CHANGED: */
 .devsite-products-alphabet-letter-heading {
-    color: #757575;
+    color: #EF6C00;
     font: 300 34px/40px Roboto, sans-serif;
     letter-spacing: -.01em;
-    margin: 40px 0 20px
+    margin: 40px 0 20px;
+    font-weight: 400;
 }
 h2,
 .devsite-landing-row h3 {
@@ -1605,13 +1607,16 @@ h3,
 .exw-control+h4.showalways {
     margin: 36px 0 20px
 }
+/* CHANGED: */
 h4 {
+    color: #FF9C60;
     font: 400 18px/32px Roboto, sans-serif;
-    margin: 32px 0 16px
+    margin: 32px 0 16px;
+    font-weight: bold
 }
 h5 {
     font: 700 16px/24px Roboto, sans-serif;
-    margin: 32px 0 16px
+    margin: 32px 0 16px;
 }
 h6 {
     font: 500 16px/24px Roboto, sans-serif;
