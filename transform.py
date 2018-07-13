@@ -4,7 +4,6 @@
 # Author: Yuxin Wu
 
 
-from __future__ import print_function
 import sys
 import os
 import bs4
@@ -44,11 +43,10 @@ def remove(*args, **kwargs):
 
 remove('header')
 remove('footer')
+remove('nav')
 remove('div', attrs={'class': 'devsite-nav-responsive-sidebar-panel'})
 remove('div', attrs={'class': 'devsite-content-footer nocontent'})
-remove('div', attrs={'id': 'gc-wrapper'})
-# remove('nav', attrs={'class': 'devsite-section-nav devsite-nav nocontent'})
-remove('nav')
+remove('div', attrs={'class': 'devsite-rating-container'})
 remove('script')
 
 # point to the new css
@@ -59,11 +57,39 @@ if allcss:
     for k in allcss[1:]:
         k.extract()
 
+
+try:
+    title_node = soup.findAll('h1', attrs={'class': 'devsite-page-title'})
+    if title_node:
+        title_node = title_node[0]
+
+        # mark method
+        method_node = soup.findAll('h2', attrs={'id': 'methods'})
+        if method_node:
+            title_node.attrs['class'] = 'dash-class'
+            title = title_node.getText().strip()
+            body = method_node[0].parent
+            children = body.children
+            children = [x for x in children if x != '\n']
+            for k in range(len(children) - 1):
+                if children[k].name == 'h3' and children[k + 1].name == 'pre':
+                    # is a method:
+                    children[k].attrs['class'] = 'dash-method'
+                    code = next(children[k].children)
+                    code.string = title + '.' + code.text
+                    #print("Find method ", children[k].getText())
+        else:
+            title_node.attrs['class'] = 'dash-function'
+except Exception:
+    print("Error parsing {}".format(fname))
+
 # mathjax doesn't work currently
 # jss = soup.findAll('script')
 # for js in jss:
     # if 'MathJax' in js.get('src'):
         # js['src'] = '/'.join(['..'] * level) + js['src']
         # break
-with open(fname, 'w') as f:
-    f.write(str(soup))
+
+to_write = str(soup).encode('utf-8')
+with open(fname, 'wb') as f:
+    f.write(to_write)

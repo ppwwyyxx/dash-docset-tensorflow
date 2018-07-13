@@ -4,7 +4,9 @@
     "index": "index.html",
     "externalURL": "https://www.tensorflow.org/",
     "selectors": {
-        "h1.devsite-page-title": "Function"
+        "h1.dash-class": "Class",
+        "h1.dash-function": "Function",
+				"h3.dash-method code": "Method"
     },
     "ignore": [
     ],

@@ -467,9 +467,11 @@ h2.numbered:nth-of-type(9):before {
     display: block
 }
 .devsite-article {
-    margin-left: 296px;
+
+/* CHANGED: */
+    margin-left: 36px;
     position: relative;
-    width: calc(100% - 496px)
+    width: calc(100% - 36px)
 }
 @media screen and (min-width: 1201px) {
     .devsite-has-apix .devsite-article {
@@ -479,7 +481,9 @@ h2.numbered:nth-of-type(9):before {
 }
 .devsite-article-inner {
     float: left;
-    width: 80%
+    /* CHANGED
+     *width: 80%
+     */
 }
 .devsite-article h1:first-of-type {
     position: relative;

@@ -24,4 +24,4 @@ which parallel > /dev/null 2>&1 && {
 }
 
 find "$1" -type f -name "*.mp4" -delete
-find "$1" | sort -f | uniq -di | xargs rm -rv
+find "$1" | sort -f | uniq -di | xargs rm -rv || true
