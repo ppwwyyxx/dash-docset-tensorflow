@@ -1,5 +1,8 @@
 # dash-docset-tensorflow
-Build [dash](https://kapeli.com/dash)/[zeal](https://github.com/zealdocs/zeal) docset for [TensorFlow](https://www.tensorflow.org/).
+
+![screenshot](/screenshot.png)
+
+View TensorFlow docs in the [dash](https://kapeli.com/dash)/[zeal](https://github.com/zealdocs/zeal) offline docset browser.
 
 To use, you can add this feed in Dash/Zeal:
 ```
@@ -17,7 +20,5 @@ Or download the latest release [here](https://github.com/ppwwyyxx/dash-docset-te
 + `cd www.tensorflow.org/`
 + `dashing build` will give you a `TensorFlow.docset` folder.
 
-Right now this `dashing.json` only roughly parses function names (which is enough for me to use).
+Right now this `dashing.json` only roughly parses function names (which is enough for most use cases).
 Feel free to add more features and contribute!
-
-![screenshot](/screenshot.png)
