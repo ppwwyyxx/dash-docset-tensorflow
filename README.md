@@ -12,7 +12,7 @@ Or download the latest release [here](https://github.com/ppwwyyxx/dash-docset-te
 
 ## Steps to generate the docset
 + Install [dashing](https://github.com/technosophos/dashing): `go get -u github.com/technosophos/dashing`
-+ `pip install --user python-magic beautifulsoup`
++ `pip install --user python-magic beautifulsoup4 lxml`
 + `cd THIS_REPO`
 + `wget -nc -np --compression=gzip --domains=www.tensorflow.org -e robots=off --adjust-extension -r 'https://www.tensorflow.org/api_docs/'`
 + `cp dashing.json icon*.png main.css www.tensorflow.org`
