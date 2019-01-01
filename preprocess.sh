@@ -1,6 +1,6 @@
 #!/bin/zsh -e
 # File: preprocess.sh
-# Author: Yuxin Wu <ppwwyyxx@gmail.com>
+# Author: Yuxin Wu
 
 [[ -z "$1" ]] && exit 1
 
@@ -23,4 +23,10 @@ which parallel > /dev/null 2>&1 && {
 }
 
 find "$1" -type f -name "*.mp4" -delete
-find "$1" | sort -f | uniq -di | xargs rm -rv || true
+
+# rename case-insensitive duplicates
+for i in $(find www.tensorflow.org/ | sort -f | uniq -di); do
+	dn=$(dirname $i)
+	fn=$(basename $i)
+	mv -v $i $dn/dedup_$fn
+done
