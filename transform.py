@@ -44,9 +44,8 @@ def remove(*args, **kwargs):
 remove('header')
 remove('footer')
 remove('nav')
-remove('div', attrs={'class': 'devsite-nav-responsive-sidebar-panel'})
-remove('div', attrs={'class': 'devsite-content-footer nocontent'})
-remove('div', attrs={'class': 'devsite-rating-container'})
+remove('devsite-header')
+remove('devsite-content-footer')
 remove('script')
 
 # point to the new css
