@@ -4,13 +4,18 @@
 
 import sys
 import os
-import bs4
+import pathlib
 import magic
+import multiprocessing as mp
+import time
+from urllib.parse import urlparse
+
+import bs4
+import tqdm
 import pygments
 import pygments.lexers
 import pygments.formatters
-from urllib.parse import urlparse
-import time
+from selectolax.parser import HTMLParser
 
 LEXER = pygments.lexers.get_lexer_by_name('python', stripall=True)
 FORMATTER = pygments.formatters.HtmlFormatter()
@@ -42,31 +47,29 @@ def process(fname):
 
     html = _read(fname)
 
-    print("Processing {} ...".format(os.path.relpath(fname)))
     level = _get_level(fname)
-    soup = bs4.BeautifulSoup(html, 'lxml')
 
-    def remove(*args, **kwargs):
-        rs = soup.findAll(*args, **kwargs)
-        for r in rs:
-            r.extract()
+    IGNORE = [
+        'header', 'footer', 'devsite-book-nav', 'nav',
+        'devsite-header', 'devsite-toc', 'devsite-content-footer',
+        'devsite-page-rating', 'script'
+    ]
 
-    remove('header')
-    remove('footer')
-    remove('devsite-book-nav')
-    remove('nav')
-    remove('devsite-header')
-    remove('devsite-toc')
-    remove('devsite-content-footer')
-    remove('devsite-page-rating')
-    remove('div', attrs={'class': 'devsite-article-meta'})
-    remove('script')
+    # use a faster parser for first-step fitering, then bs4
+    tree = HTMLParser(html)
+    tree.strip_tags(IGNORE)
+    for node in tree.css("div.devsite-article-meta"):
+        node.decompose()
+    soup = bs4.BeautifulSoup(tree.html, 'lxml')
+
     # remove the TF2 button
     try:
         buttons = soup.findAll('table', attrs={'class':'tfo-notebook-buttons'})
         tds = buttons[0].findAll('td')
-        if len(tds) == 2:
-            tds[0].extract()
+        for td in tds:
+            if "TensorFlow 2" in td.text:
+                td.extract()
+                break
     except IndexError:
         pass
 
@@ -140,11 +143,20 @@ def process(fname):
                 relpath = os.path.relpath(link_fname, start=os.path.dirname(fname))
                 link.attrs['href'] = relpath
 
-    to_write = str(soup).encode('utf-8')
-    with open(fname, 'wb') as f:
-        f.write(to_write)
+    with open(fname, 'w') as f:
+        f.write(str(soup))
 
 if __name__ == '__main__':
     path = os.path.abspath(sys.argv[1])
     if os.path.isfile(path):
         process(path)
+    elif os.path.isdir(path):
+        files = pathlib.Path(path).glob("**/*.html")
+        files = [os.fspath(x) for x in files]
+        pool = mp.Pool(int(os.cpu_count() * 1.5))
+        for _ in tqdm.tqdm(
+            pool.imap_unordered(process, files, chunksize=100),
+            total=len(files)):
+            pass
+        pool.close()
+

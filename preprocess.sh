@@ -16,11 +16,7 @@ rm -rf "$1"/versions/*/api_docs/java
 set -e
 
 
-which parallel > /dev/null 2>&1 && {
-	find "$1" -type f -name '*.html' | parallel -P +4 --eta ./transform.py '{}'
-} || {
-	find "$1" -type f -name '*.html' -exec ./transform.py {} \;
-}
+./transform.py "$1"
 
 find "$1" -type f -name "*.mp4" -delete
 
