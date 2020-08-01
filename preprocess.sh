@@ -11,8 +11,8 @@
 
 set +e
 # contains a lot of case-insensitive duplicate file names which is not allowed by dash-user-contrib
-rm -rf "$1"/api_docs/python/tf/contrib/keras*
-rm -rf "$1"/api_docs/java
+rm -rf "$1"/versions/*/api_docs/python/tf/contrib/keras*
+rm -rf "$1"/versions/*/api_docs/java
 set -e
 
 
