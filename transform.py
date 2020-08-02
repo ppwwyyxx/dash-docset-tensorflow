@@ -55,93 +55,81 @@ def process(fname):
         'devsite-page-rating', 'script'
     ]
 
-    # use a faster parser for first-step fitering, then bs4
     tree = HTMLParser(html)
     tree.strip_tags(IGNORE)
     for node in tree.css("div.devsite-article-meta"):
         node.decompose()
-    soup = bs4.BeautifulSoup(tree.html, 'lxml')
 
     # remove the TF2 button
-    try:
-        buttons = soup.findAll('table', attrs={'class':'tfo-notebook-buttons'})
-        tds = buttons[0].findAll('td')
-        for td in tds:
-            if "TensorFlow 2" in td.text:
-                td.extract()
+    buttons = tree.css_first("table.tfo-notebook-buttons")
+    if buttons:
+        for node in buttons.css("td"):
+            if "TensorFlow 2" in node.text():
+                node.decompose()
                 break
-    except IndexError:
-        pass
 
     # point to the new css
-    allcss = soup.findAll('link', attrs={'rel': 'stylesheet'})
+    allcss = tree.css("link[rel='stylesheet']")
     if allcss:
         css = allcss[0]
-        css['href'] = ''.join(['../'] * level) + 'main.css'
+        css.attrs['href'] = ''.join(['../'] * level) + 'main.css'
         for k in allcss[1:]:
-            k.extract()
+            k.decompose()
 
     # add method/class declarations
-    try:
-        title_node = soup.findAll('h1', attrs={'class': 'devsite-page-title'})
-        if title_node:
-            title_node = title_node[0]
+    title_node = tree.css_first("h1.devsite-page-title")
+    if title_node:
+        # mark method
+        method_node = tree.css_first('h2#methods')
+        if method_node:
+            # print("Find class:", title)
+            title_node.attrs['class'] = 'dash-class'
+            title = title_node.text().strip()
+            children = list(method_node.parent.iter())
+            for method_idx, node in enumerate(children):
+                if node.attrs.get('id') == 'methods':
+                    break
+            for k in range(method_idx, len(children) - 2):
+                if children[k].tag == 'h3' and children[k + 2].tag == 'pre':
+                    # is a method:
+                    children[k].attrs['class'] = 'dash-method'
+                    # print("Find method ", children[k].text())
+                    name_node = children[k].child.child
+                    name_node.replace_with(title + "." + name_node.text())
+        else:
+            title_node.attrs['class'] = 'dash-function'
 
-            # mark method
-            method_node = soup.findAll('h2', attrs={'id': 'methods'})
-            if method_node:
-                title_node.attrs['class'] = 'dash-class'
-                title = title_node.getText().strip()
-                # print("Find class:", title)
-                body = method_node[0].parent
-                children = list(body.children)
-                children = [x for x in children if x != '\n']
-                for method_idx, node in enumerate(children):
-                    try:
-                        if node.attrs.get('id') == 'methods':
-                            break
-                    except AttributeError:
-                        pass
-                for k in range(method_idx, len(children) - 2):
-                    if children[k].name == 'h3' and children[k + 2].name == 'pre':
-                        # is a method:
-                        children[k].attrs['class'] = 'dash-method'
-                        code = next(children[k].children)
-                        code.string = title + '.' + code.text
-                        # print("Find method ", children[k].getText())
-            else:
-                title_node.attrs['class'] = 'dash-function'
-    except Exception:
-        print("Error parsing {}".format(fname))
-        raise
-
-
-    for pycode in soup.findAll('pre', attrs={"class": "lang-python"}):
-        code = pycode.code.text
-        code = pygments.highlight(code, LEXER, FORMATTER)
-        pycode.replaceWith(bs4.BeautifulSoup(code, 'lxml'))
-
-    # mathjax doesn't work currently
-    # jss = soup.findAll('script')
-    # for js in jss:
-                # if 'MathJax' in js.get('src'):
-                    # js['src'] = '/'.join(['..'] * level) + js['src']
-                    # break
-
+    # Change all self-referential links to relative
     ROOT = './www.tensorflow.org/versions/r1.15/'  # change it when version is changed
-    for link in soup.findAll('a'):
+    ANCHOR = '/api_docs/python'
+    for link in tree.css('a'):
         href = link.attrs.get('href', '')
         href = urlparse(href).path
-        # change all self-referential links to relative
-        anchor = '/api_docs/python'
-        if anchor in href:
-            prefix_url = href.find(anchor)
+        if ANCHOR in href:
+            prefix_url = href.find(ANCHOR)
             link_fname = os.path.join(ROOT, href[prefix_url + 1:])
             if not os.path.isfile(link_fname):
                 link_fname += ".html"
             if os.path.isfile(link_fname):
                 relpath = os.path.relpath(link_fname, start=os.path.dirname(fname))
                 link.attrs['href'] = relpath
+
+    soup = bs4.BeautifulSoup(tree.html, 'lxml')
+
+    for pycode in soup.findAll('pre', attrs={"class": "lang-python"}):
+        code = pycode.code.text
+        code = pygments.highlight(code, LEXER, FORMATTER)
+        # https://github.com/rushter/selectolax/issues/26
+        pycode.replaceWith(bs4.BeautifulSoup(code, 'lxml'))
+
+    MATHJAX = """
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+"""
+    # mathjax only works with internet
+    head = soup.findAll('head')[0]
+    mathjax = bs4.BeautifulSoup(MATHJAX, 'lxml').findAll('script')
+    head.extend(mathjax)
 
     with open(fname, 'w') as f:
         f.write(str(soup))
@@ -155,7 +143,7 @@ if __name__ == '__main__':
         files = [os.fspath(x) for x in files]
         pool = mp.Pool(int(os.cpu_count() * 1.5))
         for _ in tqdm.tqdm(
-            pool.imap_unordered(process, files, chunksize=100),
+            pool.imap_unordered(process, files, chunksize=20),
             total=len(files)):
             pass
         pool.close()
