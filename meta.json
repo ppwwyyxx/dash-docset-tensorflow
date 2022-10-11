@@ -1,0 +1,13 @@
+{
+    "extra": {
+        "keywords": [
+            "tf2",
+            "tf"
+        ]
+    },
+    "name": "TensorFlow 2",
+    "revision": "0",
+    "title": "TensorFlow 2",
+    "version": "2.10"
+}
+

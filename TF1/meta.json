@@ -1,0 +1,12 @@
+{
+    "extra": {
+        "keywords": [
+            "tf1"
+        ]
+    },
+    "name": "TensorFlow",
+    "revision": "0",
+    "title": "TensorFlow",
+    "version": "1.15.3"
+}
+

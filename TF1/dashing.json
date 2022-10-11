@@ -1,12 +1,12 @@
 {
-    "name": "TensorFlow 2",
-    "package": "TensorFlow 2",
-    "index": "tf.html",
+    "name": "TensorFlow",
+    "package": "TensorFlow",
+    "index": "index.html",
     "externalURL": "https://www.tensorflow.org/",
     "selectors": {
         "h1.dash-class": "Class",
         "h1.dash-function": "Function",
-				"h3.dash-method": "Method"
+				"h3.dash-method code": "Method"
     },
     "ignore": [
     ],
