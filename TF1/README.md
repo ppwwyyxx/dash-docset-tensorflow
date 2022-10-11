@@ -1,6 +1,6 @@
 # dash-docset-tensorflow
 
-![screenshot](/screenshot.png)
+![screenshot](screenshot.png)
 
 View TensorFlow docs in the [dash](https://kapeli.com/dash)/[zeal](https://github.com/zealdocs/zeal) offline docset browser.
 
