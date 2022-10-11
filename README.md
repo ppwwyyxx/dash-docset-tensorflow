@@ -11,15 +11,18 @@ https://raw.githubusercontent.com/ppwwyyxx/dash-docset-tensorflow/master/TensorF
 Or download the latest release [here](https://github.com/ppwwyyxx/dash-docset-tensorflow/releases).
 
 ## Steps to generate the docset (TF 2.10)
-+ Install [dashing](https://github.com/technosophos/dashing): `go get -u github.com/technosophos/dashing`
-+ `pip install --user tqdm beautifulsoup4 lxml pygments misaka`
-+ `pip install --user -U git+https://github.com/tensorflow/docs`
-+ cd to `[tensorflow repo]/tensorflow/tools/docs`
-+ `python generate2.py --code_url_prefix "https://github.com/tensorflow/tensorflow/blob/v2.10.0/tensorflow/" --output_dir=/tmp/tf_generated_docs`
-+ cd to this repo
-+ Update version in `meta.json`
-+ `./generate-docset.sh.sh /tmp/tf_generated_docs/
-+ `TensorFlow 2.docset` will be generated under `./html`
+```bash
+# Install dashing
+go get -u github.com/technosophos/dashing
+pip install --user tqdm beautifulsoup4 lxml pygments misaka
+pip install --user -U git+https://github.com/tensorflow/docs
+cd to [tensorflow repo]/tensorflow/tools/docs
+python generate2.py --code_url_prefix "https://github.com/tensorflow/tensorflow/blob/v2.10.0/tensorflow/" --output_dir=/tmp/tf_generated_docs
+cd to this repo
+# Manually update version in `meta.json`
+./generate-docset.sh.sh /tmp/tf_generated_docs/
+# "TensorFlow 2.docset" will now be generated under ./html
+```
 
 For TensorFlow 1 docs, see [./TF1](TF1).
 
