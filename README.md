@@ -20,7 +20,7 @@ cd to [tensorflow repo]/tensorflow/tools/docs
 python generate2.py --code_url_prefix "https://github.com/tensorflow/tensorflow/blob/v2.10.0/tensorflow/" --output_dir=/tmp/tf_generated_docs
 cd to this repo
 # Manually update version in `meta.json`
-./generate-docset.sh.sh /tmp/tf_generated_docs/
+./generate-docset.sh /tmp/tf_generated_docs/
 # "TensorFlow 2.docset" will now be generated under ./html
 ```
 
